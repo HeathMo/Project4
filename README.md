@@ -28,6 +28,13 @@ After reviewing the dataset, several columns would not be required and those wer
 
 ## **Step 3: Tableau**
 
+The team utilized Tableau to create some meaningful visualizations that the user may be interested in such as:
+- Top 10s for locations, industries, sectors, and company ownership types
+- Reviews of locations, industries, sectors, and company ownership types relative to average company ratings
+- Maps of job locations with income, population, and median age layers
+
+[Link to Tableau Public](https://public.tableau.com/app/profile/heather.mott/viz/DataScienceJobs_16360772251990/CoverPage_1#1)
+
 ## **Step 4: HTML/Flask/JavaScript**
 
 ## **Step 5: Deploy Website**

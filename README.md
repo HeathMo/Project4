@@ -1,6 +1,6 @@
 # Project 4: Data Analyst Job Search
 
-[image](images/background.png)
+![image](images/background.png)
 
 ## **Background**
 
@@ -8,7 +8,7 @@ For this project, the team will demonstrate their skills acquired to date in reg
 
 ## **Table of Contents**
 
-- [Step 1: Obtaining and Cleaning](#step-1)
+- [Step 1: Obtaining and Cleaning](#step-1-obtaining-and-cleaning)
 - [Step 2: Machine Learning](#step-2)
 - [Step 3: Tableau](#step-3)
 - [Step 4: HTML/Flask/JavaScript](#step-4)

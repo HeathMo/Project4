@@ -9,12 +9,11 @@ For this project, the team will demonstrate their skills acquired to date in reg
 ## **Table of Contents**
 
 - [Step 1: Obtaining and Cleaning](#step-1-obtaining-and-cleaning)
-- [Step 2: Machine Learning](#step-2)
-- [Step 3: Tableau](#step-3)
-- [Step 4: HTML/Flask/JavaScript](#step-4)
-- [Step 5: Deploy Website](#step-5)
-- [Status](#status)
-- [YouTube Video](#youtube-video)
+- [Step 2: Machine Learning](#step-2-machine-learning)
+- [Step 3: Tableau](#step-3-tableau)
+- [Step 4: HTML/Flask/JavaScript](#step-4-html/flask/javascript)
+- [Step 5: Deploy Website](#step-5-deploy-website)
+- [Status](#status-under-construction)
 - [Team Members](#team-members)
 
 ## **Step 1: Obtaining and Cleaning**

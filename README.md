@@ -30,7 +30,7 @@ After reviewing the dataset, several columns would not be required and those wer
 •	Random Forest Classification and Random Forest Regressor were evaluated, and the group agreed on using Classification.
 •	The data was labeled, scaled, fitted, and predicted.
 •	We found the model’s accuracy improved when we remapped from nearly ninety unique salary ranges to just six.
-•	An adequate accuracy rate was achieved for the project.
+•	An adequate accuracy rate was achieved for the project. 
 
 ## **Step 3: Tableau**
 

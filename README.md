@@ -35,9 +35,13 @@ The team utilized Tableau to create some meaningful visualizations that the user
 
 [Link to Tableau Public](https://public.tableau.com/app/profile/heather.mott/viz/DataScienceJobs_16360772251990/CoverPage_1#1)
 
-## **Step 4: HTML/Flask/JavaScript**
+## **Step 4: Flask/JavaScript**
 
-## **Step 5: Deploy Website**
+## **Step 5: HTML and Deploying Website**
+
+The team used the code and displayed it on a delpoyed website using HTML and stylized with CSS. The navigation bar shows the home page, Tableau visualisations, and a More Info page to learn more about Data Science as a profession
+
+
 
 ## **Status: Under Construction**
 

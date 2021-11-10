@@ -44,16 +44,16 @@ The team utilized Tableau to create some meaningful visualizations that the user
 ## **Step 4: Flask/JavaScript**
 JavaScript
 In order for the JavaScript to work accordingly, the team completed the following steps:
-1. Create variables for each dropdown selection using jQuery to capture the selected value items
-2. Capture the selected items and convert those items into an array of variables
-3. Include a configuration or 'config' using an ajax function to create a better user experience (the user is able to toggle between the selections and their results)
+-	 Create variables for each dropdown selection using jQuery to capture the selected value items
+-	 Capture the selected items and convert those items into an array of variables
+-	 Include a configuration or 'config' using an ajax function to create a better user experience (the user is able to toggle between the selections and their results)
 
 Flask
 In order for the Flask work accordingly, the team completed the following steps:
-1. Define the entire drop down list and convert the selections into binary labels (0s or 1s) using the def function called "listToBinary"
-2. Convert the selected 0s and 1s into an array
-3. Connect the array in to the function call "predict" where the list of binaries are scaled and connected to the machine learning file (to produce the label encoder categories display on screen)
-4. Lastly, connect the flask/app.py file to the javascript file by using the 'POST' method to display the output to the user
+-	 Define the entire drop down list and convert the selections into binary labels (0s or 1s) using the def function called "listToBinary"
+-	 Convert the selected 0s and 1s into an array
+-	 Connect the array in to the function call "predict" where the list of binaries are scaled and connected to the machine learning file (to produce the label encoder categories display on screen)
+-	 Lastly, connect the flask/app.py file to the javascript file by using the 'POST' method to display the output to the user
 
 ## **Step 5: HTML and Deploying Website**
 

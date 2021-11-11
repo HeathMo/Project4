@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Find Your Next Job!</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="https://cdn.plot.ly/plotly-1.2.0.min.js"></script>
+    <link rel="icon" href="/static/images/work_logo.png" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        console.log("ready to work?");
+        $("#next-search").hide();
+      });
+    </script>
+    <style>
+      body {
+        background: url(/static/images/background.png) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
+
+      h1 {
+        text-decoration: underline;
+      }
+
+      .container {
+        background-color: lightgrey;
+        color: black;
+        border-radius: 20px 20px 20px 20px;
+        height: 1200px;
+        width: 840px;
+        position: relative;
+        top: 50%;
+        margin-left: auto;
+        margin-right: 0;
+        vertical-align: middle;
+        margin-top: 5%;
+        margin-right: 5%;
+        padding-top: 10%;
+        font-weight: bold;
+        font-size: 30px;
+        padding-right: 5px;
+        padding-left: 10px;
+        padding-top: 5px;
+      }
+
+      .vertical-center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+      }
+
+      .nav-item {
+        font-size: 25px;
+      }
+
+      .col {
+        text-align: center;
+        word-spacing: 5px;
+        line-height: 45px;
+      }
+
+      question.button {
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- nav bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <img
+          src="{{url_for('static', filename = 'images/work_logo.png')}}"
+          alt="Logo"
+          style="width: 70px"
+        />
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="/index.html">HOME <span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="visualizations.html">VISUALIZATIONS</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/moreinfo.html">MORE INFO</a>
+            </li>
+            <!-- take out dropdown -->
+            <!-- <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Dropdown link
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#">RENAME</a>
+                <a class="dropdown-item" href="#">RENAME</a>
+                <a class="dropdown-item" href="#">RENAME</a>
+              </div>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- entry form -->
+    <div class="container" id="main">
+      <div class="row">
+        <div class="vertical-center">
+          <div class="col">
+            <h1 class="question" id="phrase">Salary Estimates For Your Next Job!</h1>
+            <!-- <button class="question" id="predict-button" type="button">My Job</button> -->
+
+            <form id="user-details">
+              <br />
+              <!-- rating phrase -->
+              <p class="question" id="predict-rating">
+                What Do You Want Your Next Company To Be Rated?
+              </p>
+              <select class="question" id="ratingselection">
+                <option value=""></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+
+              <!-- location phrase -->
+              <br />
+              <br />
+              <p class="question" id="predict-location">Where Do You Want To Work?</p>
+
+              <select class="question" id="livingselection">
+                <option value=""></option>
+                <option value="Location_Addison, TX">Addison, TX</option>
+                <option value="Location_Alachua, FL">Alachua, FL</option>
+                <option value="Location_Alameda, CA">Alameda, CA</option>
+                <option value="Location_Alhambra, CA">Alhambra, CA</option>
+                <option value="Location_Allegheny West, PA">Allegheny West, PA</option>
+                <option value="Location_Allen, TX">Allen, TX</option>
+                <option value="Location_American Fork, UT">American Fork, UT</option>
+                <option value="Location_Anaheim, CA">Anaheim, CA</option>
+                <option value="Location_Arcadia, CA">Arcadia, CA</option>
+                <option value="Location_Arlington Heights, IL">Arlington Heights, IL</option>
+                <option value="Location_Arlington, TX">Arlington, TX</option>
+                <option value="Location_Athens, GA">Athens, GA</option>
+                <option value="Location_Aurora, CO">Aurora, CO</option>
+                <option value="Location_Austin, TX">Austin, TX</option>
+                <option value="Location_Azusa, CA">Azusa, CA</option>
+                <option value="Location_Beech Grove, IN">Beech Grove, IN</option>
+                <option value="Location_Bellevue, WA">Bellevue, WA</option>
+                <option value="Location_Bensalem, PA">Bensalem, PA</option>
+                <option value="Location_Berkeley Heights, NJ">Berkeley Heights, NJ</option>
+                <option value="Location_Berkeley, CA">Berkeley, CA</option>
+                <option value="Location_Berwyn, PA">Berwyn, PA</option>
+                <option value="Location_Beverly Hills, CA">Beverly Hills, CA</option>
+                <option value="Location_Blue Bell, PA">Blue Bell, PA</option>
+                <option value="Location_Boothwyn, PA">Boothwyn, PA</option>
+                <option value="Location_Boulder, CO">Boulder, CO</option>
+                <option value="Location_Brea, CA">Brea, CA</option>
+                <option value="Location_Bridgeview, IL">Bridgeview, IL</option>
+                <option value="Location_Broadview, IL">Broadview, IL</option>
+                <option value="Location_Bronx, NY">Bronx, NY</option>
+                <option value="Location_Brooklyn, NY">Brooklyn, NY</option>
+                <option value="Location_Broomfield, CO">Broomfield, CO</option>
+                <option value="Location_Burbank, CA">Burbank, CA</option>
+                <option value="Location_Burlingame, CA">Burlingame, CA</option>
+                <option value="Location_Burlingame, KS">Burlingame, KS</option>
+                <option value="Location_Camden, NJ">Camden, NJ</option>
+                <option value="Location_Campbell, CA">Campbell, CA</option>
+                <option value="Location_Carmel, IN">Carmel, IN</option>
+                <option value="Location_Carrollton, TX">Carrollton, TX</option>
+                <option value="Location_Cedar Park, TX">Cedar Park, TX</option>
+                <option value="Location_Centennial, CO">Centennial, CO</option>
+                <option value="Location_Cerritos, CA">Cerritos, CA</option>
+                <option value="Location_Chandler, AZ">Chandler, AZ</option>
+                <option value="Location_Charlotte, NC">Charlotte, NC</option>
+                <option value="Location_Chesapeake, VA">Chesapeake, VA</option>
+                <option value="Location_Chicago, IL">Chicago, IL</option>
+                <option value="Location_City of Industry, CA">City of Industry, CA</option>
+                <option value="Location_Columbus, OH">Columbus, OH</option>
+                <option value="Location_Conshohocken, PA">Conshohocken, PA</option>
+                <option value="Location_Coppell, TX">Coppell, TX</option>
+                <option value="Location_Culver City, CA">Culver City, CA</option>
+                <option value="Location_Cupertino, CA">Cupertino, CA</option>
+                <option value="Location_DC Ranch, AZ">DC Ranch, AZ</option>
+                <option value="Location_Dallas, TX">Dallas, TX</option>
+                <option value="Location_Daly City, CA">Daly City, CA</option>
+                <option value="Location_Deerfield, IL">Deerfield, IL</option>
+                <option value="Location_Denver, CO">Denver, CO</option>
+                <option value="Location_Downers Grove, IL">Downers Grove, IL</option>
+                <option value="Location_Doylestown, PA">Doylestown, PA</option>
+                <option value="Location_Draper, UT">Draper, UT</option>
+                <option value="Location_Dublin, OH">Dublin, OH</option>
+                <option value="Location_East Palo Alto, CA">East Palo Alto, CA</option>
+                <option value="Location_El Cajon, CA">El Cajon, CA</option>
+                <option value="Location_El Segundo, CA">El Segundo, CA</option>
+                <option value="Location_Elk Grove Village, IL">Elk Grove Village, IL</option>
+                <option value="Location_Emeryville, CA">Emeryville, CA</option>
+                <option value="Location_Englewood, CO">Englewood, CO</option>
+                <option value="Location_Essex Fells, NJ">Essex Fells, NJ</option>
+                <option value="Location_Evanston, IL">Evanston, IL</option>
+                <option value="Location_Exton, PA">Exton, PA</option>
+                <option value="Location_Farmers Branch, TX">Farmers Branch, TX</option>
+                <option value="Location_Feasterville Trevose, PA">Feasterville Trevose, PA</option>
+                <option value="Location_Florham Park, NJ">Florham Park, NJ</option>
+                <option value="Location_Fort Eustis, VA">Fort Eustis, VA</option>
+                <option value="Location_Fort Lee, NJ">Fort Lee, NJ</option>
+                <option value="Location_Fort Mill, SC">Fort Mill, SC</option>
+                <option value="Location_Fort Washington, PA">Fort Washington, PA</option>
+                <option value="Location_Fort Worth, TX">Fort Worth, TX</option>
+                <option value="Location_Foster City, CA">Foster City, CA</option>
+                <option value="Location_Franklin Lakes, NJ">Franklin Lakes, NJ</option>
+                <option value="Location_Fremont, CA">Fremont, CA</option>
+                <option value="Location_Gainesville, FL">Gainesville, FL</option>
+                <option value="Location_Gardena, CA">Gardena, CA</option>
+                <option value="Location_Glendale, AZ">Glendale, AZ</option>
+                <option value="Location_Glendale, CA">Glendale, CA</option>
+                <option value="Location_Glenview, IL">Glenview, IL</option>
+                <option value="Location_Grapevine, TX">Grapevine, TX</option>
+                <option value="Location_Greenwood Village, Arapahoe, CO">
+                  Greenwood Village, Arapahoe, CO
+                </option>
+                <option value="Location_Hampton, VA">Hampton, VA</option>
+                <option value="Location_Hanford, CA">Hanford, CA</option>
+                <option value="Location_Harrison, NY">Harrison, NY</option>
+                <option value="Location_Haworth, NJ">Haworth, NJ</option>
+                <option value="Location_Henderson, CO">Henderson, CO</option>
+                <option value="Location_Hercules, CA">Hercules, CA</option>
+                <option value="Location_Hilliard, OH">Hilliard, OH</option>
+                <option value="Location_Hoboken, NJ">Hoboken, NJ</option>
+                <option value="Location_Horsham, PA">Horsham, PA</option>
+                <option value="Location_Houston, TX">Houston, TX</option>
+                <option value="Location_Huntersville, NC">Huntersville, NC</option>
+                <option value="Location_Indianapolis, IN">Indianapolis, IN</option>
+                <option value="Location_Inglewood, CA">Inglewood, CA</option>
+                <option value="Location_Irving, TX">Irving, TX</option>
+                <option value="Location_Irwindale, CA">Irwindale, CA</option>
+                <option value="Location_Iselin, NJ">Iselin, NJ</option>
+                <option value="Location_Issaquah, WA">Issaquah, WA</option>
+                <option value="Location_Itasca, IL">Itasca, IL</option>
+                <option value="Location_Jacksonville, FL">Jacksonville, FL</option>
+                <option value="Location_Jeffersonville, IN">Jeffersonville, IN</option>
+                <option value="Location_Jersey City, NJ">Jersey City, NJ</option>
+                <option value="Location_Kent, WA">Kent, WA</option>
+                <option value="Location_King of Prussia, PA">King of Prussia, PA</option>
+                <option value="Location_Kirkland, WA">Kirkland, WA</option>
+                <option value="Location_Lackland AFB, TX">Lackland AFB, TX</option>
+                <option value="Location_Lake Success, NY">Lake Success, NY</option>
+                <option value="Location_Lakewood, CO">Lakewood, CO</option>
+                <option value="Location_Lawrence, IN">Lawrence, IN</option>
+                <option value="Location_Centennial, CO">Lehi, UT</option>
+                <option value="Location_Lewisville, TX">Lewisville, TX</option>
+                <option value="Location_Little Ferry, NJ">Little Ferry, NJ</option>
+                <option value="Location_Littleton, CO">Littleton, CO</option>
+                <option value="Location_Lone Tree, CO">Lone Tree, CO</option>
+                <option value="Location_Long Beach, CA">Long Beach, CA</option>
+                <option value="Location_Long Island City, NY">Long Island City, NY</option>
+                <option value="Location_Los Angeles, CA">Los Angeles, CA</option>
+                <option value="Location_Los Gatos, CA">Los Gatos, CA</option>
+                <option value="Location_Louisville, CO">Louisville, CO</option>
+                <option value="Location_Malvern, PA">Malvern, PA</option>
+                <option value="Location_Manhasset, NY">Manhasset, NY</option>
+                <option value="Location_Marin City, CA">Marin City, CA</option>
+                <option value="Location_Marina del Rey, CA">Marina del Rey, CA</option>
+                <option value="Location_Marlton, NJ">Marlton, NJ</option>
+                <option value="Location_Maywood, IL">Maywood, IL</option>
+                <option value="Location_Menlo Park, CA">Menlo Park, CA</option>
+                <option value="Location_Mesa, AZ">Mesa, AZ</option>
+                <option value="Location_Millbrae, CA">Millbrae, CA</option>
+                <option value="Location_Milpitas, CA">Milpitas, CA</option>
+                <option value="Location_Montvale, NJ">Montvale, NJ</option>
+                <option value="Location_Moorestown, NJ">Moorestown, NJ</option>
+                <option value="Location_Mooresville, NC">Mooresville, NC</option>
+                <option value="Location_Mount Laurel, NJ">Mount Laurel, NJ</option>
+                <option value="Location_Mount Vernon, NY">Mount Vernon, NY</option>
+                <option value="Location_Mountain View, CA">Mountain View, CA</option>
+                <option value="Location_New York, NY">New York, NY</option>
+                <option value="Location_Newark, CA">Newark, CA</option>
+                <option value="Location_Newark, NJ">Newark, NJ</option>
+                <option value="Location_Newport News, VA">Newport News, VA</option>
+                <option value="Location_Newtown Square, PA">Newtown Square, PA</option>
+                <option value="Location_Norfolk, VA">Norfolk, VA</option>
+                <option value="Location_Northbrook, IL">Northbrook, IL</option>
+                <option value="Location_Northfield, IL">Northfield, IL</option>
+                <option value="Location_Northlake, IL">Northlake, IL</option>
+                <option value="Location_Northridge, CA">Northridge, CA</option>
+                <option value="Location_Novato, CA">Novato, CA</option>
+                <option value="Location_Oak Brook, IL">Oak Brook, IL</option>
+                <option value="Location_Oakland, CA">Oakland, CA</option>
+                <option value="Location_Palo Alto, CA">Palo Alto, CA</option>
+                <option value="Location_Paoli, PA">Paoli, PA</option>
+                <option value="Location_Parsippany, NJ">Parsippany, NJ</option>
+                <option value="Location_Pasadena, CA">Pasadena, CA</option>
+                <option value="Location_Pasadena, TX">Pasadena, TX</option>
+                <option value="Location_Pearland, TX">Pearland, TX</option>
+                <option value="Location_Philadelphia, PA">Philadelphia, PA</option>
+                <option value="Location_Phoenix, AZ">Phoenix, AZ</option>
+                <option value="Location_Pico Rivera, CA">Pico Rivera, CA</option>
+                <option value="Location_Plano, TX">Plano, TX</option>
+                <option value="Location_Pleasanton, CA">Pleasanton, CA</option>
+                <option value="Location_Plymouth Meeting, PA">Plymouth Meeting, PA</option>
+                <option value="Location_Portsmouth, VA">Portsmouth, VA</option>
+                <option value="Location_Queens Village, NY">Queens Village, NY</option>
+                <option value="Location_Radnor, PA">Radnor, PA</option>
+                <option value="Location_Redmond, WA">Redmond, WA</option>
+                <option value="Location_Redwood City, CA">Redwood City, CA</option>
+                <option value="Location_Reedley, CA">Reedley, CA</option>
+                <option value="Location_Renton, WA">Renton, WA</option>
+                <option value="Location_Richardson, TX">Richardson, TX</option>
+                <option value="Location_Ridley Park, PA">Ridley Park, PA</option>
+                <option value="Location_Riverton, UT">Riverton, UT</option>
+                <option value="Location_Rolling Meadows, IL">Rolling Meadows, IL</option>
+                <option value="Location_Round Rock, TX">Round Rock, TX</option>
+                <option value="Location_Salt Lake City, UT">Salt Lake City, UT</option>
+                <option value="Location_San Antonio, TX">San Antonio, TX</option>
+                <option value="Location_San Diego, CA">San Diego, CA</option>
+                <option value="Location_San Francisco, CA">San Francisco, CA</option>
+                <option value="Location_San Jose, CA">San Jose, CA</option>
+                <option value="Location_San Mateo, CA">San Mateo, CA</option>
+                <option value="Location_San Ramon, CA">San Ramon, CA</option>
+                <option value="Location_Santa Clara, CA">Santa Clara, CA</option>
+                <option value="Location_Santa Monica, CA">Santa Monica, CA</option>
+                <option value="Location_Scottsdale, AZ">Scottsdale, AZ</option>
+                <option value="Location_Seattle, WA">Seattle, WA</option>
+                <option value="Location_Secaucus, NJ">Secaucus, NJ</option>
+                <option value="Location_Smithfield, VA">Smithfield, VA</option>
+                <option value="Location_South Plainfield, NJ">South Plainfield, NJ</option>
+                <option value="Location_South San Francisco, CA">South San Francisco, CA</option>
+                <option value="Location_Southlake, TX">Southlake, TX</option>
+                <option value="Location_Spring, TX">Spring, TX</option>
+                <option value="Location_Stafford, TX">Stafford, TX</option>
+                <option value="Location_Stanford, CA">Stanford, CA</option>
+                <option value="Location_Staten Island, NY">Staten Island, NY</option>
+                <option value="Location_Suffolk, VA">Suffolk, VA</option>
+                <option value="Location_Sugar Land, TX">Sugar Land, TX</option>
+                <option value="Location_Summit, NJ">Summit, NJ</option>
+                <option value="Location_Sunnyvale, CA">Sunnyvale, CA</option>
+                <option value="Location_Tarrant, TX">Tarrant, TX</option>
+                <option value="Location_Tempe, AZ">Tempe, AZ</option>
+                <option value="Location_Topeka, KS">Topeka, KS</option>
+                <option value="Location_Torrance, CA">Torrance, CA</option>
+                <option value="Location_Union City, CA">Union City, CA</option>
+                <option value="Location_Venice, CA">Venice, CA</option>
+                <option value="Location_Virginia Beach, VA">Virginia Beach, VA</option>
+                <option value="Location_Visalia, CA">Visalia, CA</option>
+                <option value="Location_Walnut Creek, CA">Walnut Creek, CA</option>
+                <option value="Location_Wayne, PA">Wayne, PA</option>
+                <option value="Location_West Chester, PA">West Chester, PA</option>
+                <option value="Location_West Conshohocken, PA">West Conshohocken, PA</option>
+                <option value="Location_West Jordan, UT">West Jordan, UT</option>
+                <option value="Location_West Orange, NJ">West Orange, NJ</option>
+                <option value="Location_West Point, PA">West Point, PA</option>
+                <option value="Location_Westerville, OH">Westerville, OH</option>
+                <option value="Location_Westlake, TX">Westlake, TX</option>
+                <option value="Location_Whippany, NJ">Whippany, NJ</option>
+                <option value="Location_Whitestown, IN">Whitestown, IN</option>
+                <option value="Location_Whittier, CA">Whittier, CA</option>
+                <option value="Location_Wilmington, DE">Wilmington, DE</option>
+                <option value="Location_Woodbridge, NJ">Woodbridge, NJ</option>
+                <option value="Location_Woodcliff Lake, NJ">Woodcliff Lake, NJ</option>
+                <option value="Location_Woodland Hills, CA">Woodland Hills, CA</option>
+                <option value="Location_Woodridge, IL">Woodridge, IL</option>
+                <option value="Location_Yorktown, VA">Yorktown, VA</option>
+              </select>
+
+              <!-- size phrase -->
+              <br />
+              <br />
+              <p class="question" id="predict-size">What's Your Preferred Company Size?</p>
+
+              <select class="question" id="sizeselection">
+                <option value=""></option>
+                <option value="Size_Unknown">Unknown</option>
+                <option value="Size_1 to 50 employees">1 to 50 employees</option>
+                <option value="Size_51 to 200 employees">51 to 200 employees</option>
+                <option value="Size_201 to 500 employees">201 to 500 employees</option>
+                <option value="Size_501 to 1000 employees">501 to 1000 employee</option>
+                <option value="Size_1001 to 5000 employees">1001 to 5000 employees</option>
+                <option value="Size_1001 to 5000 employees">1001 to 5000 employees</option>
+                <option value="Size_5001 to 10000 employees">5001 to 10000 employees</option>
+                <option value="Size_10000+ employees">10000+ employees</option>
+              </select>
+
+              <!-- Type phrase -->
+              <br />
+              <br />
+              <p class="question" id="predict-type">What's Your Company Type?</p>
+
+              <select class="question" id="typeselection">
+                <option value=""></option>
+                <option value="Type of ownership_Unknown">Unknown</option>
+                <option value="Type of ownership_College / University">College / University</option>
+                <option value="Type of ownership_Company - Private">Company - Private</option>
+                <option value="Type of ownership_Company - Public">Company - Public</option>
+                <option value="Type of ownership_Contract">Contract</option>
+                <option value="Type of ownership_Franchise">Franchise</option>
+                <option value="Type of ownership_Government">Government</option>
+                <option value="Type of ownership_Hospital">Hospital</option>
+                <option value="Type of ownership_Nonprofit Organization">
+                  Nonprofit Organization
+                </option>
+                <option value="Type of ownership_Other Organization">Other Organization</option>
+                <option value="Type of ownership_Private Practice / Firm">
+                  Private Practice / Firm
+                </option>
+                <option value="Type of ownership_School / School District">
+                  School / School District
+                </option>
+                <option value="Type of ownership_Self-employed">Self-employed</option>
+                <option value="Type of ownership_Subsidiary or Business Segment">
+                  Subsidiary or Business Segment
+                </option>
+              </select>
+
+              <!-- industry phrase -->
+              <br />
+              <br />
+              <p class="question" id="predict-industry">What's Your Industry?</p>
+
+              <select class="question" id="industryselection">
+                <option value=""></option>
+                <option value="Industry_Accounting">Accounting</option>
+                <option value="Industry_Advertising & Marketing">Advertising & Marketing</option>
+                <option value="Industry_Aerospace & Defense">Aerospace & Defense</option>
+                <option value="Industry_Architectural & Engineering Services">
+                  Architectural & Engineering Services
+                </option>
+                <option value="Industry_Audiovisual">Audiovisual</option>
+                <option value="Industry_Automotive Parts & Accessories Stores">
+                  Automotive Parts & Accessories Stores
+                </option>
+                <option value="Industry_Banks & Credit Unions">Banks & Credit Unions</option>
+                <option value="Industry_Beauty & Personal Accessories Stores">
+                  Beauty & Personal Accessories Stores
+                </option>
+                <option value="Industry_Biotech & Pharmaceuticals">
+                  Biotech & Pharmaceuticals
+                </option>
+                <option value="Industry_Brokerage Services">Brokerage Services</option>
+                <option value="Industry_Building & Personnel Services">
+                  Building & Personnel Services
+                </option>
+                <option value="Industry_Cable, Internet & Telephone Providers">
+                  Cable, Internet & Telephone Providers
+                </option>
+                <option value="Industry_Casual Restaurants">Casual Restaurants</option>
+                <option value="Industry_Catering & Food Service Contractors">
+                  Catering & Food Service Contractors
+                </option>
+                <option value="Industry_Chemical Manufacturing">Chemical Manufacturing</option>
+                <option value="Industry_Colleges & Universities">Colleges & Universities</option>
+                <option value="Industry_Commercial Equipment Repair & Maintenance">
+                  Commercial Equipment Repair & Maintenance
+                </option>
+                <option value="Industry_Computer Hardware & Software">
+                  Computer Hardware & Software
+                </option>
+                <option value="Industry_Construction">Construction</option>
+                <option value="Industry_Consulting">Consulting</option>
+                <option
+                  value="Industry_Consumer Electronics &
+              Appliances Stores"
+                >
+                  Consumer Electronics & Appliances Stores
+                </option>
+                <option value="Industry_Consumer Product Rental">Consumer Product Rental</option>
+                <option
+                  value="Industry_Consumer Products
+              Manufacturing"
+                >
+                  Consumer Products Manufacturing
+                </option>
+                <option value="Industry_Convenience Stores & Truck Stops">
+                  Convenience Stores & Truck Stops
+                </option>
+                <option
+                  value="Industry_Department,
+              Clothing, & Shoe Stores"
+                >
+                  Department, Clothing, & Shoe Stores
+                </option>
+                <option value="Industry_Drug & Health Stores">Drug & Health Stores</option>
+                <option
+                  value="Industry_Education
+              Training Services"
+                >
+                  Education Training Services
+                </option>
+                <option value="Industry_Electrical & Electronic Manufacturing">
+                  Electrical & Electronic Manufacturing
+                </option>
+                <option value="Industry_Energy">Energy</option>
+
+                <option value="Industry_Enterprise Software & Network Solutions">
+                  Enterprise Software & Network Solutions
+                </option>
+                <option
+                  value="Industry_Express Delivery
+              Services"
+                >
+                  Express Delivery Services
+                </option>
+                <option value="Industry_Federal Agencies">Federal Agencies</option>
+                <option value="Industry_Financial Analytics & Research">
+                  Financial Analytics & Research
+                </option>
+                <option value="Industry_Financial Transaction Processing">
+                  Financial Transaction Processing
+                </option>
+                <option value="Industry_Food & Beverage Manufacturing">
+                  Food & Beverage Manufacturing
+                </option>
+                <option value="Industry_Food & Beverage Stores">Food & Beverage Stores</option>
+                <option value="Industry_Gambling">Gambling</option>
+                <option value="Industry_Gas Stations">Gas Stations</option>
+                <option
+                  value="Industry_General Merchandise
+              & Superstore"
+                >
+                  General Merchandise & Superstores
+                </option>
+                <option value="Industry_General Repair & Maintenance">
+                  General Repair & Maintenance
+                </option>
+                <option
+                  value="Industry_Grocery Stores &
+              Supermarkets"
+                >
+                  Grocery Stores & Supermarkets
+                </option>
+                <option value="Industry_Health Care Products Manufacturing">
+                  Health Care Products Manufacturing
+                </option>
+                <option
+                  value="Industry_Health Care
+              Services & Hospitals"
+                >
+                  Health Care Services & Hospitals
+                </option>
+                <option value="Industry_Health Fundraising Organizations">
+                  Health Fundraising Organizations
+                </option>
+                <option value="Industry_Health, Beauty, & Fitness">
+                  Health, Beauty, & Fitness
+                </option>
+                <option value="Industry_Home Centers & Hardware Stores">
+                  Home Centers & Hardware Stores
+                </option>
+                <option value="Industry_Hotels, Motels, & Resorts">
+                  Hotels, Motels, & Resorts
+                </option>
+                <option value="Industry_IT Services">IT Services</option>
+                <option value="Industry_Industrial Manufacturing">Industrial Manufacturing</option>
+                <option value="Industry_Insurance Agencies & Brokerages">
+                  Insurance Agencies & Brokerages
+                </option>
+                <option value="Industry_Insurance Carriers">Insurance Carriers</option>
+                <option value="Industry_Internet">Internet</option>
+                <option value="Industry_Investment Banking & Asset Management">
+                  Investment Banking & Asset Management
+                </option>
+                <option value="Industry_K-12 Education">K-12 Education</option>
+                <option value="Industry_Legal">Legal</option>
+                <option value="Industry_Lending">Lending</option>
+                <option
+                  value="Industry_Logistics &
+              Supply Chain"
+                >
+                  Logistics & Supply Chain
+                </option>
+                <option value="Industry_Membership Organizations">Membership Organizations</option>
+                <option value="Industry_Metals Brokers">Metals Brokers</option>
+                <option value="Industry_Miscellaneous Manufacturing">
+                  Miscellaneous Manufacturing
+                </option>
+                <option
+                  value="Industry_Motion Picture Production &
+              Distribution"
+                >
+                  Motion Picture Production & Distribution
+                </option>
+                <option value="Industry_Municipal Governments">Municipal Governments</option>
+                <option
+                  value="Industry_News
+              Outlet"
+                >
+                  News Outlet
+                </option>
+                <option value="Industry_Oil & Gas Services">Oil & Gas Services</option>
+                <option value="Industry_Other Retail Stores">Other Retail Stores</option>
+                <option
+                  value="Industry_Pet
+              & Pet Supplies Stores"
+                >
+                  Pet & Pet Supplies Stores
+                </option>
+                <option value="Industry_Preschool & Child Care">
+                  Preschool & Child CarePreschool & Child Care
+                </option>
+                <option value="Industry_Publishing">Publishing</option>
+                <option value="Industry_Real Estate">Real Estate</option>
+
+                <option value="Industry_Research & Development">Research & Development</option>
+                <option value="Industry_Security Services">Security Services</option>
+                <option
+                  value="Industry_Social
+              Assistance"
+                >
+                  Social Assistance
+                </option>
+                <option value="Industry_Sporting Goods Stores">Sporting Goods Stores</option>
+                <option value="Industry_Sports & Recreation">Sports & Recreation</option>
+                <option value="Industry_Staffing & Outsourcing">Staffing & Outsourcing</option>
+                <option value="Industry_State & Regional Agencies">
+                  State & Regional Agencies
+                </option>
+                <option value="Industry_Stock Exchanges">Stock Exchanges</option>
+                <option value="Industry_TV Broadcast & Cable Networks">
+                  TV Broadcast & Cable Networks
+                </option>
+                <option value="Industry_Telecommunications Services">
+                  Telecommunications Services
+                </option>
+                <option
+                  value="Industry_Transportation Equipment
+              Manufacturing"
+                >
+                  Transportation Equipment Manufacturing
+                </option>
+                <option value="Industry_Transportation Management">
+                  Transportation Management
+                </option>
+                <option
+                  value="Industry_Truck Rental &
+              Leasing"
+                >
+                  Truck Rental & Leasing
+                </option>
+                <option value="Industry_Trucking">Trucking</option>
+                <option value="Industry_Utilities">Utilities</option>
+                <option value="Industry_Vehicle Dealers">Vehicle Dealers</option>
+                <option value="Industry_Venture Capital & Private Equity">
+                  Venture Capital & Private Equity
+                </option>
+                <option value="Industry_Video Games">Video Games</option>
+                <option value="Industry_Wholesale">Wholesale</option>
+              </select>
+
+              <!-- sector phrase -->
+              <br />
+              <br />
+              <p class="question" id="predict-sector">What's Your Sector?</p>
+
+              <select class="question" id="sectorselection">
+                <option value=""></option>
+                <option value="Sector_Accounting & Legal">Accounting & Legal</option>
+                <option value="Sector_Aerospace & Defense">Aerospace & Defense</option>
+                <option value="Sector_Arts, Entertainment & Recreation">
+                  Arts, Entertainment & Recreation
+                </option>
+                <option value="Sector_Biotech & Pharmaceuticals">Biotech & Pharmaceuticals</option>
+                <option value="Sector_Business Services">Business Services</option>
+                <option value="Sector_Construction, Repair & Maintenance">
+                  Construction, Repair & Maintenance
+                </option>
+                <option value="Sector_Consumer Services">Consumer Services</option>
+                <option value="Sector_Education">Education</option>
+                <option value="Sector_Finance">Finance</option>
+                <option value="Sector_Government">Government</option>
+                <option value="Sector_Health Care">Health Care</option>
+                <option value="Sector_Information Technology">Information Technology</option>
+                <option value="Sector_Insurance">Insurance</option>
+                <option value="Sector_Manufacturing">Manufacturing</option>
+                <option value="Sector_Media">Media</option>
+                <option value="Sector_Mining & Metals">Mining & Metals</option>
+                <option value="Sector_Non-Profit">Non-Profit</option>
+                <option value="Sector_Oil, Gas, Energy & Utilities">
+                  Oil, Gas, Energy & Utilities
+                </option>
+                <option value="Sector_Real Estate">Real Estate</option>
+                <option value="Sector_Restaurants, Bars & Food Services">
+                  Restaurants, Bars & Food Services
+                </option>
+                <option value="Sector_Retail">Retail</option>
+                <option value="Sector_Telecommunications">Telecommunications</option>
+                <option value="Sector_Transportation & Logistics">
+                  Transportation & Logistics
+                </option>
+                <option value="Sector_Travel & Tourism">Travel & Tourism</option>
+              </select>
+
+              <!-- revenue phrase -->
+              <br />
+              <br />
+              <p class="question" id="predict-revenue">What's Your Preferred Company's Revenue?</p>
+
+              <select class="question" id="revenueselection">
+                <option value=""></option>
+                <option value="Revenue_Unknown / Non-Applicable">Unknown / Non-Applicable</option>
+                <option value="Revenue_Less than $1 million (USD)">
+                  Less than $1 million (USD)
+                </option>
+                <option value="Revenue_$1 to $5 million (USD)">$1 to $5 million (USD)</option>
+                <option value="Revenue_$5 to $10 million (USD)">$5 to $10 million (USD)</option>
+                <option value="Revenue_$10 to $25 million (USD)">$10 to $25 million (USD)</option>
+                <option value="Revenue_$25 to $50 million (USD)">$25 to $50 million (USD)</option>
+                <option value="Revenue_$50 to $100 million (USD)">$50 to $100 million (USD)</option>
+                <option value="Revenue_$100 to $500 million (USD)">
+                  $100 to $500 million (USD)
+                </option>
+                <option value="Revenue_$500 million to $1 billion (USD)">
+                  $500 million to $1 billion (USD)
+                </option>
+                <option value="Revenue_$1 to $2 billion (USD)">$1 to $2 billion (USD)</option>
+                <option value="Revenue_$2 to $5 billion (USD)">$2 to $5 billion (USD)</option>
+                <option value="Revenue_$5 to $10 billion (USD)">$5 to $10 billion (USD)</option>
+                <option value="Revenue_$10+ billion (USD)">$10+ billion (USD)</option>
+              </select>
+
+              <br />
+              <br />
+            </form>
+
+            <button class="question" id="predict" type="button" form="user-details">PREDICT</button>
+
+            <!-- results -->
+            <h2 class="question" id="results"></h2>
+            <center>
+              <button class="question" id="next-search" type="reset">SEARCH AGAIN</button>
+            </center>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- javascript functions -->
+    <script src="/static/js/app.js"></script>
+  </body>
+</html>

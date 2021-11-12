@@ -59,9 +59,9 @@ In order for the Flask work accordingly, the team completed the following steps:
 
 The team used the code and displayed it on a delpoyed website using HTML and stylized with CSS. The navigation bar shows the home page, Tableau visualisations, and a More Info page to learn more about Data Science as a profession
 
+Link to page: [Find Your Next Job!](https://heathmo.github.io/Project4/index.html)
 
-
-## **Status: Under Construction**
+## **Status: COMPLETE**
 
 ## **Team Members**
 
